@@ -1,0 +1,189 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>
+    {% block title %} axum diesel {% endblock %}
+</title>
+
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+<link href="/assets/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+    <div class="container-fluid">
+        <img
+            src="/assets/images/starlette__short_logo__dark.svg"
+            alt="logo"
+            height="32"
+        />
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        href="#"
+                        role="button"
+                        aria-expanded="false"
+                        >&</a
+                    >
+                    <ul class="dropdown-menu">
+                        <li class="nav-item">
+                            <a class="dropdown-item" href="/">home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="dropdown-item" href="/account/users"
+                                >users</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="dropdown-item" href="/todo/list"
+                                >todo</a
+                            >
+                        </li>
+                    </ul>
+                </li>
+
+                {# #}
+
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        profile
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <span class="dropdown-item">
+                            <i class="bi bi-person-check"></i>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/account/signup">
+                                <i class="bi bi-person"></i>
+                                <sup class="ms-2">register</sup>
+                            </a>
+                        </li>
+
+                        <li class="bg-success-subtle">
+                            <a class="dropdown-item" href="/account/login">
+                                <i class="bi bi-person"></i>
+                                <sup class="ms-2">login</sup>
+                            </a>
+                        </li>
+                        <li class="bg-success-subtle">
+                            <a class="dropdown-item" href="/account/who-is-who">
+                                <i class="bi bi-person"></i>
+                                <sup class="ms-2">who's who</sup>
+                            </a>
+                        </li>
+
+                        <hr class="dropdown-divider" />
+
+                        <li class="bg-danger-subtle">
+                            <a class="dropdown-item" href="/account/logout">
+                                <i class="bi bi-person"></i>
+                                <sup class="ms-2">logout</sup>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        todo
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <li>
+                            <a class="dropdown-item" href="/todo/create">
+                                <sup class="ms-2">create</sup>
+                            </a>
+                        </li>
+
+                        <hr class="dropdown-divider" />
+
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container card">
+<p>
+    <sup>
+    {% if token %} {{ token.email }} {% endif %}
+    {% if not_user %} {{ not_user }} {% endif %}
+    </sup>
+</p>
+</div>
+
+<main role="main" class="base_main container">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="container-fluid my-3">
+    <span class="mx-5">&copy; Company</span>
+    <time id="time"></time>
+</footer>
+
+
+<script>
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const time = setInterval(() => {
+    const date = new Date();
+    document.getElementById('time').innerHTML = (`${month[date.getMonth()]}-${days[date.getDay()]}-${date.getDate()}--${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+}, 600);
+</script>
+
+{% block script %}{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
