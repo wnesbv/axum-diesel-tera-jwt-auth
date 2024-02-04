@@ -1,7 +1,7 @@
 use chrono::{Utc};
 use axum::{
     extract::{State, Form},
-    response::{Html, IntoResponse, Redirect},
+    response::{IntoResponse, Redirect, Html},
     http::{
         Response, StatusCode,
     },
@@ -9,10 +9,10 @@ use axum::{
     Extension,
 };
 
+use tera::{Context};
+
 use diesel::prelude::*;
 use diesel_async::{RunQueryDsl};
-
-use tera::{Context};
 
 use headers::Cookie;
 use axum_extra::TypedHeader;
@@ -259,85 +259,5 @@ pub async fn post_password_change(
         .await;
 
     return Ok(Redirect::to("/account/login").into_response())
-
-}
-
-
-#[debug_handler]
-pub async fn get_delete_user(
-    State(pool): State<Pool>,
-    TypedHeader(cookie): TypedHeader<Cookie>,
-    Extension(templates): Extension<Templates>
-) -> Result<impl IntoResponse, impl IntoResponse> {
-
-    let token = auth::views::request_user(
-        TypedHeader(cookie)
-    ).await;
-
-    let ok_token = match token {
-        Ok(Some(expr)) => expr,
-        Ok(None) => return Err(Redirect::to("/account/login").into_response()),
-        Err(_) => return Err(Redirect::to("/account/login").into_response()),
-    };
-
-    use schema::users::dsl::*;
-    let mut conn = pool.get().await.unwrap();
-
-    let user: Option<UpdateUser> = Some(users
-        .filter(id.eq(ok_token.id))
-        .select(UpdateUser::as_select())
-        .first(&mut conn)
-        .await
-        .unwrap());
-
-    let mut context = Context::new();
-    if user.is_some() {
-        context.insert("user", &user);
-        Ok(Html(templates.render("delete", &context).unwrap()))
-    } else {
-        context.insert("not_user", "None..");
-        Ok(Html(templates.render("delete", &context).unwrap()))
-    }
-}
-
-#[debug_handler]
-pub async fn post_delete_user(
-    State(pool): State<Pool>,
-    TypedHeader(cookie): TypedHeader<Cookie>,
-) -> Result<impl IntoResponse, impl IntoResponse> {
-
-    let token = auth::views::request_user(
-        TypedHeader(cookie)
-    ).await;
-
-    let ok_token = match token {
-        Ok(Some(expr)) => expr,
-        Ok(None) => return Err(Redirect::to("/account/login").into_response()),
-        Err(_) => return Err(Redirect::to("/account/login").into_response()),
-    };
-
-    let mut conn = pool.get().await.unwrap();
-
-    use schema::users::dsl::*;
-    let _ = diesel::delete(users.filter(id.eq(ok_token.id)))
-        .execute(&mut conn)
-        .await;
-
-    return Ok(Response::builder()
-        .status(StatusCode::FOUND)
-        .header("Location", "/")
-        .header(
-            "Set-Cookie",
-            format!(
-                "{}={}; Path={}; HttpOnly={}; SameSite={}",
-                "visit",
-                "_",
-                "/",
-                "true",
-                "lax",
-            ),
-        )
-        .body(Body::from("not found"))
-        .unwrap())
 
 }

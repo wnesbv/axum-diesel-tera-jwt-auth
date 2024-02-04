@@ -10,7 +10,7 @@ use tera::{Tera};
 
 use tower_http::services::ServeDir;
 
-use crate::{auth, profile, common::{Pool}};
+use crate::{auth, profile, import_export, common::{Pool}};
 
 
 pub fn build_routes(conn: Pool) -> Router {
@@ -31,7 +31,7 @@ pub fn build_routes(conn: Pool) -> Router {
         ("login", include_str!("../templates/login.html")),
         ("update", include_str!("../templates/update.html")),
         ("password_change", include_str!("../templates/password_change.html")),
-        ("delete", include_str!("../templates/delete.html")),
+        ("export_csv", include_str!("../templates/export_csv.html")),
     ])
     .unwrap();
 
@@ -65,7 +65,10 @@ pub fn build_routes(conn: Pool) -> Router {
                     "/password-change", get(profile::accreditation::get_password_change).post(profile::accreditation::post_password_change)
                 )
                 .route(
-                    "/delete-user", get(profile::accreditation::get_delete_user).post(profile::accreditation::post_delete_user)
+                    "/import", get(import_export::handlers::import_users)
+                )
+                .route(
+                    "/export", get(import_export::handlers::get_export_users).post(import_export::handlers::export_users)
                 )
                 .layer(Extension(Arc::new(user_tera)))
 

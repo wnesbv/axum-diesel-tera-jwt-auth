@@ -1,4 +1,3 @@
-
 use chrono::{DateTime, Utc};
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -38,6 +37,7 @@ pub struct User {
     pub updated_at: DateTime<Utc>,
     pub deleted_at: Option<DateTime<Utc>>,
 }
+
 
 #[derive(Debug, Clone, Deserialize, Serialize, Queryable, Selectable)]
 #[diesel(table_name = crate::schema::users)]
@@ -112,6 +112,8 @@ pub struct Claims {
     pub username: String,
     pub exp: usize,
 }
+
+
 
 
 mod my_date_format {
