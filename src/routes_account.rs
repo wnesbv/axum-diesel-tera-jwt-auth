@@ -10,7 +10,7 @@ use tera::{Tera};
 
 use tower_http::services::ServeDir;
 
-use crate::{auth, profile, import_export, common::{Pool}};
+use crate::{auth, profile, import_export, photo, common::{Pool}};
 
 
 pub fn build_routes(conn: Pool) -> Router {
@@ -32,6 +32,7 @@ pub fn build_routes(conn: Pool) -> Router {
         ("update", include_str!("../templates/update.html")),
         ("password_change", include_str!("../templates/password_change.html")),
         ("export_csv", include_str!("../templates/export_csv.html")),
+        ("photo", include_str!("../templates/photo.html")),
     ])
     .unwrap();
 
@@ -69,6 +70,9 @@ pub fn build_routes(conn: Pool) -> Router {
                 )
                 .route(
                     "/export", get(import_export::handlers::get_export_users).post(import_export::handlers::export_users)
+                )
+                .route(
+                    "/photo", get(photo::handlers::get_photo_users).post(photo::handlers::photo_users)
                 )
                 .layer(Extension(Arc::new(user_tera)))
 

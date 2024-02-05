@@ -19,5 +19,11 @@ pub mod import_export {
     pub mod repository;
     pub mod views;
 }
+pub mod photo {
+    pub mod handlers;
+    pub mod models;
+    pub mod repository;
+    pub mod views;
+}
 
 

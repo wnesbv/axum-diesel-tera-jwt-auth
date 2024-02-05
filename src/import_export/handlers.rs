@@ -83,7 +83,7 @@ pub async fn get_export_users(
 #[debug_handler]
 pub async fn export_users(
     State(pool): State<Pool>,
-    mut multipart: Multipart
+    mut multipart: Multipart,
 ) -> impl IntoResponse {
 
     while let Some(field) = multipart.next_field().await.unwrap() {
