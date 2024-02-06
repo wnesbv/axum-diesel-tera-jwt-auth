@@ -1,7 +1,7 @@
 use std::error::Error;
 use csv::Writer;
 use crate::{
-    models::{
+    auth::models::{
         ListUser
     },
 };

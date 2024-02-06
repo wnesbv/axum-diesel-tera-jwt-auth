@@ -25,7 +25,7 @@ use tera::{Context};
 
 use crate::{
     common::{Pool, Templates},
-    models::{
+    auth::models::{
         ListUser, FormLogin, Claims
     },
 };

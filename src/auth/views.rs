@@ -12,7 +12,7 @@ use jsonwebtoken::{
 
 use crate::{
     common::{Pool},
-    models::{
+    auth::models::{
         ListUser, Claims
     },
 };

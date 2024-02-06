@@ -115,6 +115,7 @@ pub async fn export_users(
                 email: record.email,
                 username: record.username,
                 password: hashed_password,
+                img: record.img,
                 created_at: Utc::now(),
                 updated_at: Utc::now(),
             };

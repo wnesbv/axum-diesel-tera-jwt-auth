@@ -6,6 +6,7 @@ diesel::table! {
         #[max_length = 255]
         title -> Varchar,
         description -> Nullable<Text>,
+        img -> Text,
         author_id -> Int4,
         completed -> Bool,
         created_at -> Timestamptz,
@@ -26,9 +27,9 @@ diesel::table! {
         email -> Text,
         username -> Text,
         password -> Text,
+        img -> Text,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
-        deleted_at -> Nullable<Timestamptz>,
     }
 }
 

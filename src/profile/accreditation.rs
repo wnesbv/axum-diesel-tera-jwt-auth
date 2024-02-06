@@ -9,10 +9,10 @@ use axum::{
     Extension,
 };
 
-use tera::{Context};
-
 use diesel::prelude::*;
 use diesel_async::{RunQueryDsl};
+
+use tera::{Context};
 
 use headers::Cookie;
 use axum_extra::TypedHeader;
@@ -27,7 +27,7 @@ use pbkdf2::{
 
 use crate::{
     common::{Pool, Templates},
-    models::{
+    profile::models::{
         NewUser, FormNewUser, UpdateUser, FormUpdateUser, PasswordChange, FormPasswordChange
     },
 };
@@ -89,7 +89,7 @@ pub async fn post_signup(
         return Err(Html(templates.render("signup", &context).unwrap()));
     }
 
-    let new_user = NewUser {email: form.email.clone(), username: form.username.clone(), password: hashed_password, created_at: Utc::now()};
+    let new_user = NewUser {email: form.email.clone(), username: form.username.clone(), password: hashed_password, created_at: Utc::now(), updated_at: Utc::now()};
 
     let _ = diesel::insert_into(users)
         .values(new_user)

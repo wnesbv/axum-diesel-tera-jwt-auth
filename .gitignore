@@ -1,5 +1,5 @@
 target
 *env
 .env
-src.zip
+*.zip
 cargo check.txt

@@ -7,7 +7,7 @@ use diesel_async::{RunQueryDsl};
 
 use crate::{
     common::{Pool},
-    models::{
+    auth::models::{
         ListUser
     },
 };

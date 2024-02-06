@@ -14,7 +14,7 @@ use axum_extra::TypedHeader;
 
 use crate::{
     common::{DBConnection, Templates},
-    models::{
+    profile::models::{
         ListUser
     },
 };
